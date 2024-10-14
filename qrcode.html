@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR CODE</title>
+    <script src="/js/qrcode.js"></script>
+    <script src="/js/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <style>
+    
+      body{
+        background: linear-gradient(0.25turn, #1f7092, #a2a8dc);
+        color: #fff;
+        font-family: 'Roboto', sans-serif;
+      }
+      .elements{
+        display: flex;
+        flex-direction: column;
+        justify-content: center; 
+        align-items: center; 
+        margin-top: 3%;
+      }
+
+      h1{
+        font-size: 45px;
+        font-weight: 300;
+      }
+
+      form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        
+      }
+
+      form #url{
+        padding-left: 8px;
+        height: 28px;
+        border: transparent;
+        border-radius: 5px;
+      }
+
+      form #url:focus{
+        border: 1px solid #1f7092;
+        box-shadow: 0px 0px 8px #1b6180;
+        outline: none;
+      }
+
+      form #send{
+        height: 35px;
+        border: transparent;
+        border-radius: 5px;
+        background-color: #5cc1ec;
+        color: #000000;
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+      }
+
+      form #send:hover{
+        background-color: #33b0e6;
+        transition: 0.2s;
+        box-shadow: 0px 0px 8px #1b6180;
+      }
+
+      form #send:focus{
+        border: 1px solid #1f7092;
+        box-shadow: 0px 0px 8px #1b6180;
+        outline: none;
+      }
+
+      @media(max-width: 480px){
+        h1 {
+          text-align: center
+        }
+      }
+
+    </style>
+    
+  </head>
+  <body>
+    <div class=elements>
+        <form id="name">
+            <h1>Gerador de QR CODE</h1>
+            <input type="text" id="url" placeholder="URL">
+            <input id="send" type="submit" value="Gerar">
+          </form>
+          <div id="qrcode" style="margin-top: 50px;">     
+        </div>
+        <div id="text" class="result">
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+     
+       function qrcode(event){
+            event.preventDefault()
+            var input = document.getElementById('url').value;
+            if(input == ""){
+              Swal.fire({
+                icon: "error",
+                showConfirmButton: false,
+                titleText: "A url não pode ser nula",
+                timer: 1300,
+                width: 400,
+                height: 400
+
+              })
+            }
+
+            else{
+            var divisao = document.getElementById('qrcode')
+            divisao.innerHTML = "" 
+            new QRCode(document.getElementById('qrcode'), input)
+            document.getElementById('name').reset()
+           
+            Swal.fire({
+              icon: "success",
+              showConfirmButton: false,
+              titleText: "QR CODE gerado com sucesso!",
+              width: 400,
+              height: 400,
+              timer: 1300,
+            })
+            }
+           
+       ;}
+
+       const nome = document.getElementById('name')
+       nome.addEventListener('submit', qrcode)
+
+    </script>
+  </body>
+</html>
